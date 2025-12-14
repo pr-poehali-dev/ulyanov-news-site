@@ -14,6 +14,8 @@ interface NewsArticle {
   category: NewsCategory;
   date: string;
   excerpt: string;
+  content: string;
+  author?: string;
   featured?: boolean;
 }
 
@@ -21,6 +23,7 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState('Главная');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<NewsCategory>('Все');
+  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
 
   const newsData: NewsArticle[] = [
     {
@@ -29,6 +32,8 @@ const Index = () => {
       category: 'События',
       date: '14 декабря 2024',
       excerpt: 'Сегодня состоялось торжественное открытие современного спортивного комплекса, строительство которого велось последние два года. На церемонии присутствовали жители села и почётные гости.',
+      content: 'Сегодня в центре села Ульяново состоялось торжественное открытие нового спортивного комплекса. Строительство объекта велось последние два года при поддержке областных властей и местного бюджета.\n\nНа церемонии открытия присутствовали глава администрации района, директор школы, представители спортивных федераций и более 300 жителей села. Комплекс оснащён современным оборудованием для занятий различными видами спорта.\n\nВ здании расположены волейбольная и баскетбольная площадки, тренажёрный зал, зал для занятий единоборствами и раздевалки с душевыми. Особое внимание уделено доступности для людей с ограниченными возможностями.\n\n«Это важное событие для нашего села, — отметил глава администрации. — Теперь у жителей появилась возможность заниматься спортом в комфортных условиях круглый год».\n\nПервыми посетителями комплекса стали школьники, которые провели показательные выступления по волейболу и художественной гимнастике.',
+      author: 'Марина Соколова',
       featured: true
     },
     {
@@ -37,6 +42,8 @@ const Index = () => {
       category: 'Новости',
       date: '13 декабря 2024',
       excerpt: 'Команда учеников местной школы показала блестящие результаты на областной олимпиаде по математике и естественным наукам.',
+      content: 'Команда учеников школы села Ульяново одержала победу на областной олимпиаде школьников по математике и естественным наукам. Соревнования проходили в областном центре при участии 45 команд из разных районов.\n\nВ состав команды вошли восемь учеников 9-11 классов. Особо отличились Иван Петров (11 класс), занявший первое место в математике, и Анна Смирнова (10 класс) с победой в биологии.\n\nПодготовкой команды занимались учителя Елена Викторовна Морозова и Сергей Иванович Белов. «Ребята показали отличные знания и умение работать в команде», — отметила директор школы.\n\nВсе участники получили дипломы и ценные подарки. Победители будут представлять область на региональном этапе олимпиады в феврале следующего года.',
+      author: 'Дмитрий Кузнецов'
     },
     {
       id: 3,
@@ -44,6 +51,8 @@ const Index = () => {
       category: 'История',
       date: '12 декабря 2024',
       excerpt: 'Архивные документы рассказывают о том, как в далёком 1824 году переселенцы основали первое поселение на месте современного Ульяново.',
+      content: 'В районном архиве были обнаружены уникальные документы, проливающие свет на историю основания села Ульяново. Согласно найденным записям, первое поселение на этом месте появилось в 1824 году.\n\nОснователями села стали переселенцы из центральных губерний России, получившие земли по указу императора Александра I. Первоначально поселение насчитывало 15 дворов и около 80 жителей.\n\nНазвание село получило в честь помещика Ульянова, владевшего окрестными землями. В документах 1830-х годов впервые упоминается деревянная церковь и школа для крестьянских детей.\n\nК концу XIX века Ульяново превратилось в крупное село с населением более 500 человек. Здесь действовали две мельницы, кузница и торговые лавки.\n\nСегодня в сельском музее можно увидеть копии этих документов, старинные фотографии и предметы быта первых жителей села.',
+      author: 'Ольга Историкова'
     },
     {
       id: 4,
@@ -51,6 +60,8 @@ const Index = () => {
       category: 'События',
       date: '11 декабря 2024',
       excerpt: 'Традиционная сельская ярмарка порадовала жителей свежими продуктами от местных фермеров и ремесленными изделиями.',
+      content: 'В минувшие выходные в центре села прошла традиционная сельская ярмарка. Мероприятие привлекло более 500 посетителей и 35 торговцев из Ульяново и соседних населённых пунктов.\n\nПосетители смогли приобрести свежие овощи, молочные продукты, мёд, домашнюю выпечку и изделия местных ремесленников. Особым спросом пользовались вязаные изделия и деревянные игрушки ручной работы.\n\nВ рамках ярмарки прошли мастер-классы по традиционным ремёслам. Дети учились лепить из глины, плести из соломы и расписывать деревянные заготовки.\n\nФольклорный ансамбль «Рябинушка» выступил с концертной программой народных песен. Для самых маленьких работала игровая зона с аниматорами.\n\n«Такие ярмарки помогают поддержать местных производителей и сохранить традиции», — отметил организатор мероприятия.',
+      author: 'Марина Соколова'
     },
     {
       id: 5,
@@ -58,6 +69,8 @@ const Index = () => {
       category: 'Новости',
       date: '10 декабря 2024',
       excerpt: 'Дорожные работы, начавшиеся месяц назад, были завершены на две недели раньше запланированного срока благодаря хорошей погоде.',
+      content: 'Ремонт дороги на главной улице села Ульяново завершён досрочно. Работы, которые планировалось закончить к концу месяца, были выполнены на две недели раньше срока.\n\nПодрядная организация провела капитальный ремонт 1,2 километра дорожного полотна. Было заменено старое покрытие, установлены новые бордюры, обновлена ливневая канализация.\n\nБлагоприятные погодные условия позволили строителям работать без перерывов. «Мы смогли закончить раньше благодаря тёплой погоде и слаженной работе бригад», — прокомментировал прораб Александр Степанов.\n\nОбщая стоимость работ составила 8,5 миллионов рублей из областного бюджета. В следующем году планируется отремонтировать ещё три улицы села.\n\nЖители села отмечают значительное улучшение качества дорожного покрытия и благодарят рабочих за оперативность.',
+      author: 'Дмитрий Кузнецов'
     },
     {
       id: 6,
@@ -65,6 +78,8 @@ const Index = () => {
       category: 'История',
       date: '9 декабря 2024',
       excerpt: 'Сборник народных преданий и историй, передававшихся из поколения в поколение, теперь доступен в сельской библиотеке.',
+      content: 'В сельской библиотеке состоялась презентация сборника «Легенды и предания Ульяново». Книга содержит народные истории, собранные у старожилов села за последние три года.\n\nРаботу по сбору материалов вели сотрудники библиотеки совместно с краеведческим кружком школы. Было записано более 50 историй от 23 жителей села старше 70 лет.\n\nСреди преданий — рассказы о таинственном лесном озере, старинном кладе, спрятанном во время войны, и призраке мельника, который, по легенде, до сих пор бродит у старой мельницы.\n\nОсобый интерес представляют истории о народных традициях и обрядах, которые соблюдались в селе сто лет назад. Многие из них сегодня забыты.\n\n«Эти истории — живая связь с нашим прошлым, — говорит библиотекарь Вера Сергеевна. — Важно сохранить их для будущих поколений».\n\nСборник можно взять в библиотеке. Планируется выпуск второго тома с новыми материалами.',
+      author: 'Ольга Историкова'
     },
   ];
 
@@ -77,6 +92,86 @@ const Index = () => {
 
   const featuredNews = filteredNews.filter(n => n.featured);
   const regularNews = filteredNews.filter(n => !n.featured);
+
+  if (selectedArticle) {
+    return (
+      <div className="min-h-screen bg-background">
+        <header className="border-b-4 border-primary bg-background">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-black tracking-tight">УЛЬЯНОВО+</h1>
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => setSelectedArticle(null)}
+                className="font-semibold uppercase tracking-wide"
+              >
+                <Icon name="ArrowLeft" size={20} className="mr-2" />
+                К списку новостей
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        <main className="container mx-auto px-4 py-12 max-w-4xl">
+          <article>
+            <div className="mb-6">
+              <Badge variant="default" className="font-bold uppercase tracking-wider mb-4">
+                {selectedArticle.category}
+              </Badge>
+              <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight">
+                {selectedArticle.title}
+              </h1>
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <span className="flex items-center gap-2">
+                  <Icon name="Calendar" size={16} />
+                  {selectedArticle.date}
+                </span>
+                {selectedArticle.author && (
+                  <span className="flex items-center gap-2">
+                    <Icon name="User" size={16} />
+                    {selectedArticle.author}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <Separator className="my-8" />
+
+            <div className="prose prose-lg max-w-none">
+              {selectedArticle.content.split('\n\n').map((paragraph, index) => (
+                <p key={index} className="mb-6 text-lg leading-relaxed text-foreground">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            <Separator className="my-8" />
+
+            <div className="flex gap-4">
+              <Button
+                variant="outline"
+                className="font-semibold"
+                onClick={() => setSelectedArticle(null)}
+              >
+                <Icon name="ArrowLeft" size={20} className="mr-2" />
+                Вернуться к новостям
+              </Button>
+            </div>
+          </article>
+        </main>
+
+        <footer className="border-t-4 border-primary bg-background mt-16">
+          <div className="container mx-auto px-4 py-8">
+            <p className="text-center text-sm text-muted-foreground">
+              © 2024 УЛЬЯНОВО+. Все права защищены.
+            </p>
+          </div>
+        </footer>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -157,7 +252,10 @@ const Index = () => {
                   </Badge>
                   <span className="text-sm text-muted-foreground font-semibold">{article.date}</span>
                 </div>
-                <h2 className="text-4xl font-black mb-4 leading-tight hover:text-primary transition-colors cursor-pointer">
+                <h2 
+                  className="text-4xl font-black mb-4 leading-tight hover:text-primary transition-colors cursor-pointer"
+                  onClick={() => setSelectedArticle(article)}
+                >
                   {article.title}
                 </h2>
                 <p className="text-lg leading-relaxed text-foreground">{article.excerpt}</p>
@@ -177,7 +275,10 @@ const Index = () => {
                 </Badge>
                 <span className="text-xs text-muted-foreground font-semibold">{article.date}</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 leading-tight hover:text-primary transition-colors cursor-pointer">
+              <h3 
+                className="text-xl font-bold mb-3 leading-tight hover:text-primary transition-colors cursor-pointer"
+                onClick={() => setSelectedArticle(article)}
+              >
                 {article.title}
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{article.excerpt}</p>
